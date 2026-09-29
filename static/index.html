@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Resume Analyzer</title>
+  <link rel="stylesheet" href="/static/style.css" />
+  <!-- Google Fonts for modern clean typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="container header-container">
+      <div class="logo">
+        <span class="logo-icon">📄</span>
+        <h1>AI Resume Analyzer</h1>
+      </div>
+      <p class="tagline">Evaluate how well your resume matches your target job description</p>
+    </div>
+  </header>
+
+  <main class="container main-content">
+    <!-- Left Column: Input Form -->
+    <section class="card input-section">
+      <h2 class="section-title">Upload & Compare</h2>
+
+      <form id="analyzerForm">
+        <!-- PDF Upload Area -->
+        <div class="form-group">
+          <label class="form-label">1. Resume (PDF only)</label>
+          <div class="drop-zone" id="dropZone">
+            <input type="file" id="resumeFile" accept=".pdf" class="file-input" required />
+            <div class="drop-zone-content" id="dropZoneContent">
+              <span class="upload-icon">📁</span>
+              <p class="upload-text"><strong>Click to browse</strong> or drag & drop your PDF resume</p>
+              <p class="upload-hint">Only .pdf files are supported</p>
+            </div>
+            <!-- File selected badge -->
+            <div class="selected-file" id="selectedFile" style="display: none;">
+              <span class="file-icon">📑</span>
+              <span class="file-name" id="fileName">resume.pdf</span>
+              <button type="button" class="remove-file-btn" id="removeFileBtn" title="Remove file">&times;</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Job Description Input -->
+        <div class="form-group">
+          <label for="jobDescription" class="form-label">2. Target Job Description</label>
+          <textarea
+            id="jobDescription"
+            rows="8"
+            placeholder="Paste the target job description, key responsibilities, or required skills here..."
+            required
+          ></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" id="analyzeBtn" class="btn btn-primary">
+          <span class="btn-text">Analyze Resume</span>
+          <span class="btn-icon">⚡</span>
+        </button>
+      </form>
+
+      <!-- Alert Box for Errors -->
+      <div id="errorAlert" class="alert alert-error" style="display: none;"></div>
+    </section>
+
+    <!-- Right Column: Results Section -->
+    <section class="card results-section" id="resultsSection">
+      <!-- Placeholder State when no analysis has run -->
+      <div class="placeholder-state" id="placeholderState">
+        <div class="placeholder-icon">🎯</div>
+        <h3>No Analysis Yet</h3>
+        <p>Upload a PDF resume and paste a job description on the left to see your match score and recommendations.</p>
+      </div>
+
+      <!-- Loading State -->
+      <div class="loading-state" id="loadingState" style="display: none;">
+        <div class="spinner"></div>
+        <p class="loading-text">Analyzing your resume...</p>
+        <span class="loading-subtext">Extracting skills and computing match score</span>
+      </div>
+
+      <!-- Analysis Results View -->
+      <div class="results-content" id="resultsContent" style="display: none;">
+        <div class="results-header">
+          <h2 class="section-title">Analysis Results</h2>
+          <button type="button" class="btn-reset" id="resetBtn">Clear All</button>
+        </div>
+
+        <!-- Score Card -->
+        <div class="score-card">
+          <div class="score-circle" id="scoreCircle">
+            <span class="score-number" id="scoreValue">0%</span>
+            <span class="score-label">Match Score</span>
+          </div>
+          <div class="score-info">
+            <h3 id="scoreStatus">Evaluating...</h3>
+            <p id="scoreDescription">Here is how well your resume matches the target job description.</p>
+          </div>
+        </div>
+
+        <!-- Skills Found -->
+        <div class="skills-block">
+          <h3>Skills Found in Resume</h3>
+          <div class="skills-container" id="skillsFoundList">
+            <!-- Dynamically injected -->
+          </div>
+        </div>
+
+        <!-- Missing Skills -->
+        <div class="skills-block">
+          <h3>Missing Skills from Job Requirements</h3>
+          <div class="skills-container" id="missingSkillsList">
+            <!-- Dynamically injected -->
+          </div>
+        </div>
+
+        <!-- Recommendations -->
+        <div class="recommendations-block">
+          <h3>Recommended Actions</h3>
+          <ul class="recommendations-list" id="recommendationsList">
+            <!-- Dynamically injected -->
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <div class="container">
+      <p>AI Resume Analyzer &bull; Built with FastAPI and Vanilla JS</p>
+    </div>
+  </footer>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
